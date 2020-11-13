@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 con = sqlite3.connect('chat.db')
 
-con.execute('create table if not exists user(id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(200) UNIQUE NOT NULL, senha VARCHAR (200) NOT NULL)')
+con.execute('create table if not exists user(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT UNIQUE NOT NULL, senha TEXT NOT NULL)')
 con.close()
 @app.route('/')
 def main():
