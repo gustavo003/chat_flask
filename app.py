@@ -51,7 +51,7 @@ def cadastro():
        if(nome=='' or nome == ' '):
          return render_template('cadastro.html', msg="1")
        if(senha=='' or nome == ' '):
-         return render_template('cadastro.html', msg="3")
+         return render_template('cadastro.html', msg="3", nome=nome)
       
        with sqlite3.connect("chat.db") as con:
        
@@ -69,12 +69,12 @@ def cadastro():
            con.commit()
            return redirect('/')     
         else:
-           return render_template('cadastro.html', msg = "2", nome=nome)
+           return render_template('cadastro.html', msg = "2")
 
      except:
        
         con.rollback()
-        return redirect('/cadastro', msg="4")
+        return render_template('cadastro.html', msg="4")
    return render_template('cadastro.html')
 
        
@@ -82,4 +82,4 @@ def cadastro():
 
 
 if (__name__=="__main__"):
-    socket.run()
+    socket.run(app)
