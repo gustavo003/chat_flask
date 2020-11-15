@@ -67,7 +67,15 @@
     <div class="input-group mb-3">
       <input type="text" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2" name="sala">
     </div>
+    {%if msg=="3"%}
+    <div class="alert alert-danger" role="alert">
 
+      É necessário digitar uma sala!  
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {%endif%}
     <div class="links">
       <input type="submit" value="Entrar">
       <br>
@@ -78,6 +86,9 @@
     </div>
   </span>
       </div>
+      <script>
+        localStorage.clear()
+      </script>
       <script type="text/javascript" src="{{url_for('static', filename='jquery/jquery.min.js')}}"></script>
       <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
 </body>

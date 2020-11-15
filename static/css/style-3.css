@@ -10,7 +10,8 @@ header{
 }
 
 .chat{
-  height: 400px;
+  overflow: scroll;
+    height: 400px;
 }
 
 body{

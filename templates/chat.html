@@ -16,7 +16,8 @@
         <div id="messages">
 
         </div>
-       
+        <label >Chat: "{{room}}"</label>
+
           <div class=" form-control chat" id="mensagens" rows="3">
       
           </div>
@@ -27,9 +28,8 @@
             <input type="submit" value="Anexar">
           </div>
           </div>
-          <div class="Sair">
-            <input type="submit" value="Sair">
-          </div>
+          <button onclick="sair()"> Sair</button>
+
         
       </div>
     </div>
@@ -41,7 +41,7 @@
     <script type="text/javascript" charset="utf-8">
         var socket = io();
         socket.on('connect', function() {
-            socket.emit('join', {nome:"{{nome}}"} );
+            socket.emit('join', {nome:"{{nome}}", room:"{{room}}"} );
         });
 
         function enviar(){
@@ -52,7 +52,7 @@
                 }
                 else{
                 
-                socket.emit('enviar_mensagem', {nome:"{{nome}}", mensagem:input})
+                socket.emit('enviar_mensagem', {nome:"{{nome}}", mensagem:input, room:"{{room}}"})
                 document.getElementById("mensagem").value="";
             }
         }
@@ -64,23 +64,46 @@
       newNode.innerHTML = `<b>${data['nome']}</b> entrou na sala`;
       document.getElementById('messages').appendChild(newNode);
     })
+    
+    window.addEventListener("beforeunload", function (event) {
+        console.log("{{nome}}");
+        socket.emit('unjoin', {nome:"{{nome}}", room:"{{room}}"})
+});
+   
 
+socket.on('leave', function (data,room){
+   
+console.log('oXEEE  ')
+    if(data['name']=="{{nome}}"){
 
-    socket.on('nova_mensagem', function (data) {
+        window.location.href="/"
+    }
+else{
+  
+    const novono = document.createElement('div');
+      novono.innerHTML = `<b>${data['nome']}</b> saiu da sala`;
+      document.getElementById('messages').appendChild(novono);
+
+  
+}
+})
+
+    socket.on('nova_mensagem', function (data, room) {
      
-     const newNode = document.createElement('div');
+     const novono = document.createElement('div');
      console.log(data.nome);
-     newNode.innerHTML = `<b>${data.nome}:&nbsp;</b> ${data.mensagem}`;     
+     novono.innerHTML = `<b>${data.nome}:&nbsp;</b> ${data.mensagem}`;     
 
 
 
-     newNode.id="mens"
      
-     
-     
-     document.getElementById('mensagens').appendChild(newNode);
+     document.getElementById('mensagens').appendChild(novono);
    })
+function sair(){
 
+        socket.emit('unjoin', {nome:"{{nome}}", room:"{{room}}"})
+
+}
     </script>
 
 </body>

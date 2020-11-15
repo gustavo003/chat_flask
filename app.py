@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 import hashlib
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, join_room, leave_room
+import os
+from flask_login import login_manager
 app = Flask(__name__)
 app.secret_key = "etignotasanimumdimittitinartes"
 socketio = SocketIO(app)
@@ -31,9 +33,12 @@ def main():
               if(x.fetchall()==[]):
                  return render_template('index.html', msg="2", nome=nome)
               else:
-                 
+                 sala = request.form['sala']
+                 if(sala=="" or sala==" "):
+                    return render_template('index.html', msg="3", nome=nome)
+
                  session['usuario'] = nome
-                 
+                 session['sala'] = sala
                  return redirect('/chat')
      except:
         render_template('index.html', msg="4")
@@ -42,9 +47,11 @@ def main():
 @app.route('/chat')
 def chat():
    try:
-      if(session['usuario']):
-         print(session['usuario'])
-         return render_template('chat.html', nome=session['usuario'])
+      if(session['usuario']!=None):
+         
+         return render_template('chat.html', nome=session['usuario'], room=session['sala'])
+      else:
+         return redirect('/')
    except:
       return redirect('/')
    
@@ -88,15 +95,23 @@ def cadastro():
    return render_template('cadastro.html')
 
        
+@socketio.on('unjoin')
+def handle_leave_room_event(data):
+
+   data['name']= session['usuario']
+   socketio.emit('leave', data, room=data['room']);
+   leave_room(data['room'])
+
 
 
 @socketio.on('join')
 def handle_message(data):
-   socketio.emit('new_user', data)
+   join_room(session['sala'])
+   socketio.emit('new_user', data, room=data['room'])
 
 @socketio.on('enviar_mensagem')
 def receive(data):
-   socketio.emit('nova_mensagem', data)
+   socketio.emit('nova_mensagem', data, room=data['room'])
 
 
 
