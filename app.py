@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 import hashlib
 from flask_socketio import SocketIO
 app = Flask(__name__)
-socket = SocketIO(app)
+app.secret_key = "etignotasanimumdimittitinartes"
+socketio = SocketIO(app)
 
 con = sqlite3.connect('chat.db')
 cur = con.cursor()
@@ -30,6 +31,9 @@ def main():
               if(x.fetchall()==[]):
                  return render_template('index.html', msg="2", nome=nome)
               else:
+                 
+                 session['usuario'] = nome
+                 
                  return redirect('/chat')
      except:
         render_template('index.html', msg="4")
@@ -37,7 +41,13 @@ def main():
 
 @app.route('/chat')
 def chat():
-   return render_template('chat.html')
+   try:
+      if(session['usuario']):
+         print(session['usuario'])
+         return render_template('chat.html', nome=session['usuario'])
+   except:
+      return redirect('/')
+   
 
 
 @app.route('/cadastro', methods=['GET', 'POST'])
@@ -80,6 +90,17 @@ def cadastro():
        
 
 
+@socketio.on('join')
+def handle_message(data):
+   socketio.emit('new_user', data)
+
+@socketio.on('enviar_mensagem')
+def receive(data):
+   socketio.emit('nova_mensagem', data)
+
+
+
+
 
 if (__name__=="__main__"):
-    socket.run(app)
+    socketio.run(app)

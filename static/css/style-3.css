@@ -1,0 +1,41 @@
+header{
+  width: 100%;
+  height: 100px;
+  font-size: 90px;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+.chat{
+  height: 400px;
+}
+
+body{
+  background-color: #7952B3;
+}
+
+.container {
+  position: relative;
+}
+.float-right {
+  margin-left: 5px;
+  margin-top: 3px;
+}
+.Sair{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+label{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  font-size: 25px;
+  font-family: cursive;
+
+}

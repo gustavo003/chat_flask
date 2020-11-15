@@ -5,38 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet"  href="{{url_for('static', filename='css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style-3.css')}}">
+
     <title>Bem vindo ao chat</title>
 </head>
 <body>
+    <div id="messages">
 
-  <header>
-  </header>
-    <div class="chat">
-      <div class="container">
-        <div id="messages">
-
-        </div>
-       
-          <div class=" form-control chat" id="mensagens" rows="3">
-      
-          </div>
-            <div class="input-group mb-3">
-            <input id="mensagem" type="text" class="form-control" placeholder="Digite sua mensagem" aria-label="Recipient's username" aria-describedby="button-addon2">
-          <div class="float-right">
-            <button onclick="enviar()"> Enviar</button>
-            <input type="submit" value="Anexar">
-          </div>
-          </div>
-          <div class="Sair">
-            <input type="submit" value="Sair">
-          </div>
-        
-      </div>
     </div>
-    <script type="text/javascript" src="{{url_for('static', filename='jquery/jquery.min.js')}}"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
 
+    <div id="mensagens">
 
+    </div>
+
+    <input type="text" id="mensagem">
+    <button id="button" onclick="enviar()"> Enviar</button>
+    
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf-8">
         var socket = io();
@@ -82,6 +65,7 @@
    })
 
     </script>
-
+    <script type="text/javascript" src="{{url_for('static', filename='jquery/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
 </body>
 </html>
