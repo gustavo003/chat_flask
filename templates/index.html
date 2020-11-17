@@ -15,12 +15,13 @@
   </header>
     <div class="formu">
       <span class="border">
+      </span>
+
       <div class="container">
 
-    <form action="{{ url_for('main')}}" method="post" >
+    <form action="{{ url_for('main')}}" method="post">
 
-      <!-- Eu deixei a mesma lógica do teu código, só acrescentei o bootstrap e coloquei o formulário em um container,
-      o input eu não alterei nome ou tipo, só acrescentei -->
+     
       {%if msg=="4"%}
        <div class="alert alert-danger" role="alert">
 
@@ -34,9 +35,9 @@
            Usuário:
        </label>
       
-       <div class="input-group mb-3">
-         <input type="text" value="{{nome}}") class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2" name="usuario">
-       </div>
+     
+         <input type="text" value="{{nome}}" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2" name="usuario">
+  
        {%if msg=="1"%}
        <div class="alert alert-danger" role="alert">
 
@@ -49,8 +50,8 @@
        <label>
         Senha:
     </label>
-    <div class="input-group mb-3">
-      <input type="password" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2" name="senha">
+    <div class=" mb-3 inputs">
+      <input type="password" value="" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="button-addon2" name="senha">
     </div>
     {%if msg=="2"%}
     <div class="alert alert-danger" role="alert">
@@ -77,14 +78,13 @@
     </div>
     {%endif%}
     <div class="links">
-      <input type="submit" value="Entrar">
+      <input type="submit" value="Entrar" class="bg-success" style="padding: 10px 0;">
       <br>
 
     </div>
     <a href="/cadastro">Cadastre-se</a>
       </form>
     </div>
-  </span>
       </div>
       <script>
         localStorage.clear()

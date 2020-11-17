@@ -9,8 +9,12 @@ header{
 
 }
 
+#mensagens{
+  height: 380px;
+overflow-y: scroll;
+}
+
 .chat{
-  overflow: scroll;
     height: 400px;
 }
 
